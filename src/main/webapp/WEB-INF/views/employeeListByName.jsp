@@ -39,10 +39,9 @@ color:blue;
 						<th>LastName</th>
 						<th>Salary</th>
 						<th>AddressId</th>
-						<th>Address</th>
 						<th>Action</th>
 					</tr>
-					<c:forEach var="emp" items="${listEmployee}">
+					<c:forEach var="emp" items="${listEmployeeByName}">
 
 						<tr>
 							<td><c:out value="${emp.id}" /></td>
@@ -50,14 +49,13 @@ color:blue;
 							<td><c:out value="${emp.lastName}" /></td>
 							<td><c:out value="${emp.salary}" /></td>
 							<td><c:out value="${emp.address.addressId}" /></td>
-							<td><c:out value="${emp.address.address}" /></td>
-							<td><a href="edit?id=<c:out value='${emp.id}' />">Edit</a>
-								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${emp.id}' />">Delete</a></td>
+							<td><a href="${actionEditDelete}?id=<c:out value='${emp.id}' />">Select</a>
+								&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						</tr>
 					</c:forEach>
 		
 
 			</table>
+			
 </body>
 </html>

@@ -1,16 +1,15 @@
 package com.slb.EmployeeDetailsApp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.slb.EmployeeDetailsApp.Repo.EmployeeRepo;
+import com.slb.EmployeeDetailsApp.model.EmployeeEntity;
 
-@Service
-public class EmployeeService {
-	
-	@Autowired
-	EmployeeRepo employeeRepo;
-	
-	
+public interface EmployeeService {
 
+	void createEmpRecord(EmployeeEntity emp);
+	List<EmployeeEntity> selectEmpRecords();
+	EmployeeEntity selectEmp(int empId);
+	void updateEmp(EmployeeEntity emp);
+	void deleteEmpRecord(int empId);
+	List<EmployeeEntity>selectEmpByName(String firstName);
 }

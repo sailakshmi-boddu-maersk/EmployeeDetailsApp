@@ -57,12 +57,12 @@ color:red;
 <h2 align="center">Employee Form</h2>
 <c:if test="${emp!= null}">
   <!--  <h2 align="center">Edit Employee Form</h2> -->
-	<form align="center" action="update">
+	<form align="center" action="update" modelAttribute="employee">
 	<input type="hidden" name="id" value="${emp.id}">
 </c:if>
 <c:if test="${emp == null}">
     <!-- <h2 align="center"> New Employee Form</h2> -->
-	<form align="center" action="insert">
+	<form align="center" action="insert" modelAttribute="employee">
 	<input type="hidden" name="id" value="0">
 </c:if>
 <%-- <input type="hidden" name="id" value="${emp.id}"> --%>
@@ -82,11 +82,11 @@ color:red;
  </tr>
  <tr>
  <td>Enter Address Id</td>
- <td><input type="number" name="addressId" value="${emp.addressId}" min="0" step="1"	 required></td>
+ <td><input type="number" name="addressId" value="${emp.address.addressId}" min="0" step="1"	 required></td>
  </tr>
  <tr>
  <td>Enter Address</td>
- <td><input type="text" name="address" value="${emp.address}" pattern="[a-zA-Z\s]*" oninvalid="setCustomValidity('please enter alphabets and space only')" oninput="setCustomValidity('')" minlength="3" required ></td>
+ <td><input type="text" name="address" value="${emp.address.address}" pattern="[a-zA-Z\s]*" oninvalid="setCustomValidity('please enter alphabets and space only')" oninput="setCustomValidity('')" minlength="3" required ></td>
  </tr>
  </table>
  <div class="submit">
