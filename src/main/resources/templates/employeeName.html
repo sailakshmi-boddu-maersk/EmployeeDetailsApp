@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -49,9 +46,8 @@ color:blue;
 </style>
 </head>
 <body>
-
 <form align="center" action="getEmps" id="form1">
-<input type="hidden" name="action" value="${actionEditDelete}">
+<input type="hidden" name="action" th:value="${actionEditDelete}">
 <table border="1" align="center" cellpadding="5"
       style="font-size: 150%; font-family: inherit; font-style: normal; background-color: window;">
 <tr>
@@ -70,16 +66,12 @@ color:blue;
 
 </table>
 </form>
-
- <c:set var="msg" value="${msg}"/>
-<c:if test="${msg!=null}">
-<h3 align="center">${msg}</h3><br>
+<h3 align="center" th:text="${msg}"></h3>
 <h2 align="center">
-<a href="new">Do you want to create new employee </a><br>
+<a href="new" th:if="${msg}">Do you want to create new employee </a><br>
 </h2>
-</c:if>
 <h2 align="center">
-      <a href="home">Get back to home page</a><br>
+      <a href="/">Get back to home page</a><br>
 </h2>
 
 </body>

@@ -34,46 +34,10 @@ public class EmployeeController {
 		  return "index";
 	  }
 
-	@GetMapping("/index")
-	  public String indexPage() {
-		  return "index";
-	  }
-	  
-	  @RequestMapping("/home")
-	  public String homePage() {
-		  return "home-page";
-	  }
-	  
-	  @RequestMapping("/login")
-	  public String login(@RequestParam("uname") String uname,@RequestParam("password") String pass,HttpSession session,Model model) {
-		  System.out.println(uname+" "+pass);
-		  if(uname.equals("sai")&& pass.equals("1234")) {
-			  session.setAttribute("admin","activeState");
-			  return "home-page";
-		  }
-		  model.addAttribute("userMsg","Please log in with valid details to continue..");
-		  return "index";
-	  }
-	  
 	  @RequestMapping("/new")
 	  public String newForm() {
 		  return "employee-form";
 	  }
-	  
-//	  @RequestMapping("/insert")
-//	  public String insert(@RequestParam("id") int id,
-//			  @RequestParam("firstName")String firstName,
-//			  @RequestParam("lastName")String lastName,
-//			  @RequestParam("salary")float salary,
-//			  @RequestParam("addressId")int addressId,
-//			  @RequestParam("address")String address,
-//			  HttpServletRequest request) {
-//		  Address1 add=new Address1(addressId,address);
-//		  Employee1 employee = new Employee1(firstName,lastName,salary,add);
-//		  
-//		  employeeService.createEmpRecord(employee);
-//		  return "redirect:/list";
-//	  }
 	  
 	  @RequestMapping("/insert")
 	  public String insert(Employee employee){
@@ -100,18 +64,11 @@ public class EmployeeController {
 	  }
 	  
 	  @RequestMapping("/update")
-	  public String update(@RequestParam("id") int id,
-			  @RequestParam("firstName")String firstName,
-			  @RequestParam("lastName")String lastName,
-			  @RequestParam("salary")float salary,
-			  @RequestParam("addressId")int addressId,
-			  @RequestParam("address")String address) {
-		  Address1 add=new Address1(addressId,address);
-		  EmployeeEntity emp=EmployeeEntity.builder().firstName(firstName).lastName(lastName).salary(salary).address(add).build();
+	  public String update(Employee employee){
+		  EmployeeEntity emp=modelMapper.map(employee,EmployeeEntity.class);
 		  employeeServiceImpl.updateEmp(emp);
-		  return "redirect:/list";      //sendRedirect
+		  return "redirect:/list";
 	  }
-	  
 	  @RequestMapping("/delete")
 	  public String delete(@RequestParam("id") int id,HttpServletRequest request) {
 		  employeeServiceImpl.deleteEmpRecord(id);
@@ -144,11 +101,73 @@ public class EmployeeController {
 			  return "employeeListByName";
 		  }  
 	  }	 
+	
+
+//		@GetMapping("/index")
+//		  public String indexPage() {
+//			  
+//			  return "index";
+//		  }
+//		  
+//		  @RequestMapping("/home")
+//		  public String homePage() {
+//			  return "index";
+//		  }
+//		  
+//		  @RequestMapping("/login")
+//		  public String login(@RequestParam("uname") String uname,@RequestParam("password") String pass,HttpSession session,Model model) {
+//			  System.out.println(uname+" "+pass);
+//			  if(uname.equals("sai")&& pass.equals("1234")) {
+//				  session.setAttribute("admin","activeState");
+//				  return "home-page";
+//			  }
+//			  model.addAttribute("userMsg","Please log in with valid details to continue..");
+//			  return "index";
+//		  }
+//		  	
 	  
-	  @RequestMapping("/logout")
-	  public String logout(HttpSession session) {
-		  session.removeAttribute("admin");
-		  session.invalidate();
-		  return "index";
-	  }
+//	  @RequestMapping("/insert")
+//	  public String insert(@RequestParam("id") int id,
+//			  @RequestParam("firstName")String firstName,
+//			  @RequestParam("lastName")String lastName,
+//			  @RequestParam("salary")float salary,
+//			  @RequestParam("addressId")int addressId,
+//			  @RequestParam("address")String address,
+//			  HttpServletRequest request) {
+//		  Address1 add=new Address1(addressId,address);
+//		  Employee1 employee = new Employee1(firstName,lastName,salary,add);
+//		  
+//		  employeeService.createEmpRecord(employee);
+//		  return "redirect:/list";
+//	  }
+	  
+//	  @RequestMapping("/insert")
+//	  public String insert(@RequestParam("firstName")String firstName,
+//			  @RequestParam("lastName")String lastName,
+//			  @RequestParam("salary")float salary,
+//			  @RequestParam("addressId")int addressId,
+//			  @RequestParam("address")String address) {
+//		  Address1 add=new Address1(addressId,address);
+//		  EmployeeEntity emp=EmployeeEntity.builder().firstName(firstName).lastName(lastName).salary(salary).address(add).build();
+//		  employeeServiceImpl.createEmpRecord(emp);
+//		  return "redirect:/list";      //sendRedirect
+//	  }
+//	  @RequestMapping("/update")
+//	  public String update(@RequestParam("id") int id,
+//			  @RequestParam("firstName")String firstName,
+//			  @RequestParam("lastName")String lastName,
+//			  @RequestParam("salary")float salary,
+//			  @RequestParam("addressId")int addressId,
+//			  @RequestParam("address")String address) {
+//		  Address1 add=new Address1(addressId,address);
+//		  EmployeeEntity emp=EmployeeEntity.builder().id(id).firstName(firstName).lastName(lastName).salary(salary).address(add).build();
+//		  employeeServiceImpl.updateEmp(emp);
+//		  return "redirect:/list";      //sendRedirect
+//	  }
+//	  @RequestMapping("/logout")
+//	  public String logout(HttpSession session) {
+//		  session.removeAttribute("admin");
+//		  session.invalidate();
+//		  return "index";
+//	  }
 }

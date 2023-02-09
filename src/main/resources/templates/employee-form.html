@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+input{
+height:20px;
+width:200px;
+}
+input:hover{
+border-color:#03C04A;
+border-radius: 5px;
+}
+.submit input:hover {
+	background:#3CB043;
+	color: #fff;
+	border: 1px solid #eee;
+	border-radius: 10px;
+	box-shadow: 3px 3px 3px white;
+	text-shadow: none;
+}
+.submit input{
+float:right;
+height:35px;
+width:100px;
+margin-top:10px;
+margin-right:550px;
+background-color: green;
+color: white;
+border: 3px solid white;
+border-radius: 10px;
+font: bold 15px arial,sans-serif;
+font-size:20px;
+
+}
+.msg h3{
+float:right;
+margin-top:10px;
+margin-right:450px;
+color:red;
+}
+.msg h2{
+float:right;
+margin-top:10px;
+margin-right:500px;
+color:red;
+}
+</style>
+</head>
+<body>
+<h2 align="center">Employee Form</h2>
+<form align="center" th:action="${emp}? 'update' : 'insert'" modelAttribute="employee">
+<input type="hidden" name="id" th:if="${emp?.id}"th:value="${emp?.id}">
+<input type="hidden" name="id" th:unless="${emp?.id}"th:value="0">
+ <table border="1" align="center" cellpadding="5"
+      style="font-size: 150%; font-family: inherit; font-style: normal; background-color: window;"> 
+ <tr>
+ <td>Enter First Name</td>
+ <td><input type="text" name="firstName" th:value="*{emp?.firstName}" pattern="[a-zA-Z\s]*" minlength="3" oninvalid="setCustomValidity('please enter alphabets and space only')" oninput="setCustomValidity('')"required ></td>
+ </tr>
+ <tr>
+ <td>Enter Last Name</td>
+ <td><input type="text" name="lastName" th:value="*{emp?.lastName}" pattern="[a-zA-Z\s]*" minlength="3" oninvalid="setCustomValidity('please enter alphabets and space only')" oninput="setCustomValidity('')"required ></td>
+ </tr>
+ <tr>
+ <td>Enter Salary</td>
+ <td><input type="number" name="salary" th:value="*{emp?.salary}" min="0" step="0.1" required></td>
+ </tr>
+ <tr>
+ <td>Enter Address Id</td>
+ <td><input type="number" name="addressId" th:value="*{emp?.address?.addressId}" min="0" step="1"	 required></td>
+ </tr>
+ <tr>
+ <td>Enter Address</td>
+ <td><input type="text" name="address" th:value="*{emp?.address?.address}" pattern="[a-zA-Z\s]*" oninvalid="setCustomValidity('please enter alphabets and space only')" oninput="setCustomValidity('')" minlength="3" required ></td>
+ </tr>
+ </table>
+ <div class="submit">
+ <input type="submit">
+ </div>			
+ </form> 
+ <div align="center" class="msg">
+ <h2><a align="center" href="/">Get back to home page</a><br></h2>
+<h3 align="center" th:text="${msg}"></h3>
+</div>
+</body>
+</html>

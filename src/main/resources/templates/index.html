@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -73,16 +70,7 @@ width:100%;
 }
 </style>
 </head>
-
-<body class="options">
-<% response.setHeader("Cache-control","no-cache,no-store,must-revalidate");
-   response.setHeader("pragma","no-cache");
-   response.setHeader("Expires","0");
-   if(session.getAttribute("admin")==null || (!(session.getAttribute("admin")).equals("activeState")))
-   {
-	   response.sendRedirect("/index");
-   }
- %>
+<body>
 <div class="body">
   <div class="header">
   <h1 align="center">Employee Management</h1>
@@ -109,5 +97,6 @@ width:100%;
     </h2>
     </div>
   </div>
+
 </body>
 </html>
