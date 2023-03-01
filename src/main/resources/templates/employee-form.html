@@ -50,7 +50,7 @@ color:red;
 </head>
 <body>
 <h2 align="center">Employee Form</h2>
-<form align="center" th:action="${emp}? 'update' : 'insert'" modelAttribute="employee">
+<form align="center" th:action="${emp}? 'update' : 'insert'" modelAttribute="employee" method="post">
 <input type="hidden" name="id" th:if="${emp?.id}"th:value="${emp?.id}">
 <input type="hidden" name="id" th:unless="${emp?.id}"th:value="0">
  <table border="1" align="center" cellpadding="5"

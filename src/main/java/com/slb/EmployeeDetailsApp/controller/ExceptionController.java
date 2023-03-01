@@ -14,12 +14,12 @@ import com.slb.EmployeeDetailsApp.exception.NoSuchEmployeeExistsException;
 public class ExceptionController {
 	    
 	
-	    @ExceptionHandler({NoHandlerFoundException.class})
-	    @ResponseStatus(value=HttpStatus.NOT_FOUND)
-	    public String noHandlerFound(Model model) {
-	    	model.addAttribute("msg","No Handler Found Exception");
-	    	return "error";
-	    }
+//	    @ExceptionHandler({NoHandlerFoundException.class})
+//	    @ResponseStatus(value=HttpStatus.NOT_FOUND)
+//	    public String noHandlerFound(Model model) {
+//	    	model.addAttribute("msg","No Handler Found Exception");
+//	    	return "error";
+//	    }
 	    
 	    @ExceptionHandler(value= Exception.class)
 	    @ResponseStatus(value=HttpStatus.BAD_REQUEST) 

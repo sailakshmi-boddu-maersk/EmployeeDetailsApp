@@ -11,7 +11,16 @@ color:red;
 </head>
 <body>
 <h1 align="center">Oops! Something went wrong!!!</h1>
+<!-- <div th:if="${msg}">
 <h2 align="center" th:text="${msg}"> </h2>
+<h3 align="center"><a href="/">Click here!! To get back to home</a></h3>
+</div>
+<div th:unless="${msg}">
+<h2 align="center"> No Handler Found Exception</h2>
+<h3 align="center"><a href="/">Click here!! To get back to home</a></h3>
+</div> -->
+<h2 align="center" th:if="${msg}" th:text="${msg}"> </h2>
+<h2 align="center" th:unless="${msg}"> No Handler Found Exception</h2>
 <h3 align="center"><a href="/">Click here!! To get back to home</a></h3>
 </body>
 </html>

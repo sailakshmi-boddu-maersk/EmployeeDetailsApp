@@ -6,10 +6,10 @@ import com.slb.EmployeeDetailsApp.model.EmployeeEntity;
 
 public interface EmployeeService {
 
-	void createEmpRecord(EmployeeEntity emp);
+	EmployeeEntity createEmpRecord(EmployeeEntity emp);
 	List<EmployeeEntity> selectEmpRecords();
 	EmployeeEntity selectEmp(int empId);
-	void updateEmp(EmployeeEntity emp);
-	void deleteEmpRecord(int empId);
+	EmployeeEntity updateEmp(EmployeeEntity emp);
+	EmployeeEntity deleteEmpRecord(int empId);
 	List<EmployeeEntity>selectEmpByName(String firstName);
 }

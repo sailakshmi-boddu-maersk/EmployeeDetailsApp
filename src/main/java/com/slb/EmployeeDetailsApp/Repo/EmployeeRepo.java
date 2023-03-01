@@ -14,5 +14,5 @@ public interface EmployeeRepo extends JpaRepository<EmployeeEntity,Integer>{
 	List<EmployeeEntity> findByFirstName(String firstName);
     
 	EmployeeEntity findById(int id);
-
+	EmployeeEntity deleteById(int id);
 }

@@ -20,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Autowired
 	AddressRepo addressRepo;
 	
-	public void createEmpRecord(EmployeeEntity emp) {
+	public EmployeeEntity createEmpRecord(EmployeeEntity emp) {
 		EmployeeEntity employee=employeeRepo.findById(emp.getId());
 		if(employee!=null) {
 			throw new EmployeesAlreadyExistsException(
@@ -30,11 +30,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 			if(!addressRepo.existsById(emp.getAddress().getAddressId())) {
 				addressRepo.save(emp.getAddress());
 			}
-			employeeRepo.save(emp);
+			return employeeRepo.save(emp);
 		}
 	}
 	public List<EmployeeEntity> selectEmpRecords(){
-		employeeRepo.findAll();
 		return employeeRepo.findAll();
 		
 	}
@@ -46,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return emp;
 		
 	}
-	public void updateEmp(EmployeeEntity emp) {
+	public EmployeeEntity updateEmp(EmployeeEntity emp) {
 		EmployeeEntity employee=employeeRepo.findById(emp.getId());
 		if(employee==null) {
 			throw new NoSuchEmployeeExistsException(
@@ -56,16 +55,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 			if(!addressRepo.existsById(emp.getAddress().getAddressId())) {
 				addressRepo.save(emp.getAddress());
 			}
-			employeeRepo.save(emp);
+			return employeeRepo.save(emp);
 		}
 	}
-	public void deleteEmpRecord(int empId) {
+	public EmployeeEntity deleteEmpRecord(int empId) {
 		EmployeeEntity emp=employeeRepo.findById(empId);
 		 if (emp == null)
 	            throw new NoSuchEmployeeExistsException(
 	                "No Such Employee exists!!");
 		 else
-			employeeRepo.deleteById(empId);
+			return employeeRepo.deleteById(empId);
 	}
 
 	public List<EmployeeEntity>selectEmpByName(String firstName) {

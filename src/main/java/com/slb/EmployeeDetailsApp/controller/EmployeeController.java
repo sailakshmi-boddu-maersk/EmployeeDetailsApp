@@ -1,5 +1,6 @@
 package com.slb.EmployeeDetailsApp.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +8,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slb.EmployeeDetailsApp.model.Address1;
@@ -18,9 +24,10 @@ import com.slb.EmployeeDetailsApp.model.EmployeeEntity;
 import com.slb.EmployeeDetailsApp.service.EmployeeServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
 public class EmployeeController {
 	
 	@Autowired
@@ -30,31 +37,36 @@ public class EmployeeController {
 	ModelMapper modelMapper;
 	
 	@GetMapping("/")
-	  public String index() {
-		  return "index";
+	  public ModelAndView index() {
+		ModelAndView modelAndView = new ModelAndView();
+	    modelAndView.setViewName("index");
+		  return modelAndView;
 	  }
 
-	  @RequestMapping("/new")
-	  public String newForm() {
-		  return "employee-form";
+	  @GetMapping("/new")
+	  public ModelAndView newForm() {
+		  ModelAndView modelAndView = new ModelAndView();
+		  modelAndView.setViewName("employee-form");
+		  return modelAndView;
 	  }
 	  
-	  @RequestMapping("/insert")
-	  public String insert(Employee employee){
+	  @PostMapping("/insert")
+	  public void insert(Employee employee,HttpServletResponse response) throws IOException{
 		  EmployeeEntity emp=modelMapper.map(employee,EmployeeEntity.class);
 		  employeeServiceImpl.createEmpRecord(emp);
-		  return "redirect:/list";
+		  response.sendRedirect("/list");
 	  }
 	  
-	  @RequestMapping("/list")
-	  public String list(Model model) {
+	  @GetMapping("/list")
+	  public ModelAndView postEmployeeList(ModelAndView mv) {
 		  List<EmployeeEntity> empList=new ArrayList<>();
 		  empList=employeeServiceImpl.selectEmpRecords();
-		  model.addAttribute("listEmployee",empList);
-		  return "employee-list";
+		  mv.addObject("listEmployee",empList);
+		  mv.setViewName("employee-list");
+		  return mv;
 	  }
 	  
-	  @RequestMapping("/edit")
+	  @GetMapping("/edit")
 	  public ModelAndView edit(@RequestParam("id") int id) {
 		  ModelAndView mv=new ModelAndView();
 		  EmployeeEntity emp=employeeServiceImpl.selectEmp(id);
@@ -63,19 +75,21 @@ public class EmployeeController {
 		  return mv;
 	  }
 	  
-	  @RequestMapping("/update")
-	  public String update(Employee employee){
+//	  @PutMapping("/update")
+	  @RequestMapping(value="/update", method= {RequestMethod.PUT,RequestMethod.POST})
+	  public void update(Employee employee,HttpServletResponse response) throws IOException{
 		  EmployeeEntity emp=modelMapper.map(employee,EmployeeEntity.class);
 		  employeeServiceImpl.updateEmp(emp);
-		  return "redirect:/list";
+		  response.sendRedirect("/list");
 	  }
-	  @RequestMapping("/delete")
-	  public String delete(@RequestParam("id") int id,HttpServletRequest request) {
+//	  @DeleteMapping("/delete")
+	  @RequestMapping(value="/delete", method= {RequestMethod.DELETE,RequestMethod.GET})
+	  public void delete(@RequestParam("id") int id,HttpServletRequest request,HttpServletResponse response) throws IOException {
 		  employeeServiceImpl.deleteEmpRecord(id);
-		  return "redirect:/list";
+		  response.sendRedirect("/list");
 	  }
 	  
-	  @RequestMapping("/empRec")
+	  @GetMapping("/empRec")
 	  public ModelAndView empRec(@RequestParam("action")String action) {
 		  
 		  ModelAndView mv=new ModelAndView();
@@ -84,21 +98,23 @@ public class EmployeeController {
 		  return mv;  
 	  }
 	  
-	  @RequestMapping("/getEmps")
-	  public String getEmpByName(@RequestParam("firstName") String firstName,
-			           @RequestParam("action")String action,Model model) {
-		  model.addAttribute("actionEditDelete",action);
+	  @GetMapping("/getEmps")
+	  public ModelAndView getEmpByName(@RequestParam("firstName") String firstName,
+			           @RequestParam("action")String action,ModelAndView mv) {
+		  mv.addObject("actionEditDelete",action);
 		  List<EmployeeEntity> empList=new ArrayList<EmployeeEntity>();
 		  empList=employeeServiceImpl.selectEmpByName(firstName);
 		  if(empList.isEmpty()) {
-			  model.addAttribute("actionEditDelete",action);
-			  model.addAttribute("msg","Error,unable to find employee details!! "+"Please provide correct employee name..");
-			  return "employeeName";
+			  mv.addObject("actionEditDelete",action);
+			  mv.addObject("msg","Error,unable to find employee details!! "+"Please provide correct employee name..");
+			  mv.setViewName("employeeName");
+			  return mv;
 		  }
 		  else {
-			  model.addAttribute("actionEditDelete",action);
-			  model.addAttribute("listEmployeeByName",empList);
-			  return "employeeListByName";
+			  mv.addObject("actionEditDelete",action);
+			  mv.addObject("listEmployeeByName",empList);
+			  mv.setViewName("employeeListByName");
+			  return mv;
 		  }  
 	  }	 
 	
